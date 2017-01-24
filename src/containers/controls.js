@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {resetDeck, discardSelected, drawThree, markHintCards} from '../actions/index'
-import {CardsOnTableSelector, SelectedCardsSelector} from '../selectors/index'
+import {CardsOnTableSelector, SelectedCardsSelector, CardsInDeckSelector} from '../selectors/index'
 
 class Controls extends Component {
   componentWillMount () {
@@ -21,10 +21,8 @@ class Controls extends Component {
     for (let i = 0; i < table.length - 2; i++) {
       for (let j = i + 1; j < table.length - 1; j++) {
         for (let k = j + 1; k < table.length; k++) {
-          console.log(`${i} ${j} ${k}`)
           let set = [table[i], table[j], table[k]]
           if (makesSet(set).length === 0) {
-            console.log(set)
             this.props.markHintCards(this.props.cards, set)
             return
           }
@@ -57,10 +55,11 @@ class Controls extends Component {
   render () {
     return (
       <div className="col-xs-2 controls">
-        <button onClick={this.onResetClick.bind(this)}>Reset Game</button>
-        <button onClick={this.onCheckClick.bind(this)}>Check Set</button>
-        <button onClick={this.onDrawClick.bind(this)}>Draw 3</button>
+        <button onClick={this.onCheckClick.bind(this)}>Check</button>
         <button onClick={this.onHintClick.bind(this)}>Hint</button>
+        <button onClick={this.onDrawClick.bind(this)}>Draw</button>
+        <button onClick={this.onResetClick.bind(this)}>Reset</button>
+        <div>Left: {this.props.deck.length}</div>
       </div>
     )
   }
@@ -92,7 +91,8 @@ function mapStateToProps (state) {
   return {
     cards: state.cards,
     tableCards: CardsOnTableSelector(state),
-    selected: SelectedCardsSelector(state)
+    selected: SelectedCardsSelector(state),
+    deck: CardsInDeckSelector(state)
   }
 }
 

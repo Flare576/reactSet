@@ -1,7 +1,6 @@
 import {RESET_DECK, DRAW_THREE, CLICK_CARD, MARK_HINT, DISCARD_SELECTED} from '../actions/index'
 
 export default function (state=[], action) {
-  console.log(action)
   switch (action.type) {
     case RESET_DECK:
     case DRAW_THREE:

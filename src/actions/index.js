@@ -63,7 +63,6 @@ export function markHintCards (deck, hints) {
       return Object.assign({}, card, {selected: false})
     }
   })
-  console.log('called')
 
   return {
     type: MARK_HINT,
@@ -82,7 +81,8 @@ export function discardSelected (deck) {
     nextDeck.push(Object.assign({}, pick, {selected: false, location: LOCATIONS.DISCARD}))
   })
   // If we dropped below 9, draw up
-  if (selected.length < 9) {
+  let onTable = nextDeck.filter( card => card.location === LOCATIONS.TABLE)
+  if (onTable.length < 9) {
     nextDeck = drawCards(3, nextDeck)
   }
 
@@ -133,6 +133,9 @@ function shuffle (start, end, cards) {
 
 function drawCards (cardCount, cards) {
   let pos = cards.findIndex(card => card.location === LOCATIONS.DECK)
+  if (pos === -1) {
+    throw 'no cards left'
+  }
   let newCards = []
   for (let i = 0; i < cardCount && pos+i < cards.length; i++) {
     newCards.push(Object.assign({}, cards[pos+i], {location: LOCATIONS.TABLE}))
@@ -140,6 +143,6 @@ function drawCards (cardCount, cards) {
   return [
     ...cards.slice(0, pos),
     ...newCards,
-    ...cards.slice(pos+cardCount+1)
+    ...cards.slice(pos+newCards.length)
   ]
 }

@@ -22,7 +22,6 @@ class Table extends Component {
   }
 
   render () {
-    console.log(this.props.cards)
     return (
       <div className="col-xs-10">
         {this.props.cards.map(card => this.renderCard(card))}
