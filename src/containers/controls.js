@@ -1,21 +1,37 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {resetDeck, discardSelected} from '../actions/index'
+import {resetDeck, discardSelected, drawThree, markHintCards} from '../actions/index'
 import {CardsOnTableSelector, SelectedCardsSelector} from '../selectors/index'
-
-import Card from '../models/card'
 
 class Controls extends Component {
   componentWillMount () {
-    this.onResetClick()
+    this.props.resetDeck()
   }
 
   onResetClick () {
-    let newDeck = makeDeck()
-    //shuffle(0, newDeck.length, newDeck) // todo: put this back
-    drawCards(9, newDeck)
+    this.props.resetDeck()
+  }
 
-    this.props.resetDeck(newDeck)
+  onDrawClick () {
+    this.props.drawThree(this.props.cards)
+  }
+
+  onHintClick ()  {
+    let table = this.props.tableCards
+    for (let i = 0; i < table.length - 2; i++) {
+      for (let j = i + 1; j < table.length - 1; j++) {
+        for (let k = j + 1; k < table.length; k++) {
+          console.log(`${i} ${j} ${k}`)
+          let set = [table[i], table[j], table[k]]
+          if (makesSet(set).length === 0) {
+            console.log(set)
+            this.props.markHintCards(this.props.cards, set)
+            return
+          }
+        }
+      }
+    }
+    alert("No sets on the table")
   }
 
   onCheckClick () {
@@ -35,7 +51,7 @@ class Controls extends Component {
 
     }
 
-    this.props.discardSelected()
+    this.props.discardSelected(this.props.cards)
   }
 
   render () {
@@ -43,23 +59,11 @@ class Controls extends Component {
       <div className="table">
         <button onClick={this.onResetClick.bind(this)}>Reset Game</button>
         <button onClick={this.onCheckClick.bind(this)}>Check Set</button>
+        <button onClick={this.onDrawClick.bind(this)}>Draw 3</button>
+        <button onClick={this.onHintClick.bind(this)}>Hint</button>
       </div>
     )
   }
-}
-
-function makeDeck () {
-  let newDeck = []
-  Object.keys(Card.colors).forEach(color => {
-    Object.keys(Card.shades).forEach(shade => {
-      Object.keys(Card.shapes).forEach(shape => {
-        for (let count = 1; count <= 3; count++) {
-          newDeck.push(new Card(color, count, shade, shape))
-        }
-      })
-    })
-  })
-  return newDeck
 }
 
 function makesSet (cards) {
@@ -80,34 +84,8 @@ function makesSet (cards) {
 }
 
 function sameOrUnique (characteristics) {
-  console.log(characteristics)
   return (characteristics[0] === characteristics[1] && characteristics[0] === characteristics[2]) ||
     (characteristics[0] !== characteristics[1] && characteristics[0] !== characteristics[2] && characteristics[1] !== characteristics[2])
-}
-
-function drawCards (cardCount, cards) {
-  let pos = cards.findIndex(card => card.location === Card.locations.DECK)
-  for (let i = 0; i < cardCount; i++) {
-    cards[pos+i].location = Card.locations.TABLE
-  }
-}
-
-
-function shuffle (start, end, cards) {
-  var currentIndex = end, temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
-  while (start !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = cards[ currentIndex ];
-    cards[ currentIndex ] = cards[ randomIndex ];
-    cards[ randomIndex ] = temporaryValue;
-  }
 }
 
 function mapStateToProps (state) {
@@ -118,4 +96,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, {resetDeck, discardSelected})(Controls)
+export default connect(mapStateToProps, {resetDeck, discardSelected, drawThree, markHintCards})(Controls)

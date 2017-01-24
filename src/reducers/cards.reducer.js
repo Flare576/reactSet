@@ -1,27 +1,20 @@
-import {RESET_DECK, CLICK_CARD, DISCARD_SELECTED} from '../actions/index'
-import Card from '../models/card'
+import {RESET_DECK, DRAW_THREE, CLICK_CARD, MARK_HINT, DISCARD_SELECTED} from '../actions/index'
 
 export default function (state=[], action) {
+  console.log(action)
   switch (action.type) {
-    case RESET_DECK: return action.payload
+    case RESET_DECK:
+    case DRAW_THREE:
+    case DISCARD_SELECTED:
+    case MARK_HINT:
+      return action.payload
     case CLICK_CARD:
       let cardIdx = state.findIndex(card => card.id === action.payload.id)
-      let card = state[cardIdx]
-      let newCard = Object.assign({}, card, {selected: !card.selected})
       return [
         ...state.slice(0, cardIdx),
-        newCard,
+        action.payload,
         ...state.slice(cardIdx+1)
       ]
-    case DISCARD_SELECTED:
-      let selected = state.filter( card => card.selected)
-      let nextState = state.filter((card) =>
-        selected.find(pick => card.id === pick.id) === undefined
-      )
-      selected.forEach(pick => {
-        nextState.push(Object.assign({}, pick, {selected: false, location: Card.locations.DISCARD}))
-      })
-      return nextState
     default: return state
   }
 }

@@ -1,11 +1,11 @@
 import {createSelector} from 'reselect'
-import Card from '../models/card'
+import {LOCATIONS} from '../actions/index'
 
 const getCards =  (state) => state.cards
 
 export const CardsOnTableSelector = createSelector(
   [getCards],
-  (cards) => cards.filter( card => card.location === Card.locations.TABLE)
+  (cards) => cards.filter( card => card.location === LOCATIONS.TABLE)
 )
 
 export const SelectedCardsSelector = createSelector(

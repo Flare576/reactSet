@@ -11,7 +11,10 @@ class Table extends Component {
 
   renderCard (card) {
     return (
-      <div onClick={() => this.props.clickCard(card)} className={`card ${card.selected ? 'selected' : ''}`} key={card.id}>
+      <div
+        onClick={() => this.props.clickCard(card)}
+        className={`card ${card.selected ? 'selected' : ''}`}
+        key={card.id}>
         <span>{card.count}</span>
         <span>{card.color}</span>
         <span>{card.shade}</span>
@@ -21,6 +24,7 @@ class Table extends Component {
   }
 
   render () {
+    console.log(this.props.cards)
     return (
       <div className="cardTable">
         {this.props.cards.map(card => this.renderCard(card))}
