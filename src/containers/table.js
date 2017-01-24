@@ -22,6 +22,9 @@ class Table extends Component {
   }
 
   render () {
+    if (this.props.cards.length === 0) {
+      return <h1 className="col-xs-10 h1 center-text">YOU WIN!!!</h1>
+    }
     return (
       <div className="col-xs-10">
         {this.props.cards.map(card => this.renderCard(card))}

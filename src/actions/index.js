@@ -134,7 +134,7 @@ function shuffle (start, end, cards) {
 function drawCards (cardCount, cards) {
   let pos = cards.findIndex(card => card.location === LOCATIONS.DECK)
   if (pos === -1) {
-    throw 'no cards left'
+    return cards
   }
   let newCards = []
   for (let i = 0; i < cardCount && pos+i < cards.length; i++) {
