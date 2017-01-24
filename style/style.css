@@ -1,0 +1,25 @@
+.cardTable {
+}
+
+.breaker {
+    clear: both;
+    display: block;
+}
+
+.card {
+    float:left;
+    border: 1px solid black;
+    padding: 4px;
+}
+
+
+.selected {
+    background-color: blue !important;
+}
+
+.card span {
+    margin-left: 2px;
+}
+
+.controls {
+}
