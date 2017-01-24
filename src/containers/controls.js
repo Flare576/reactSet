@@ -56,7 +56,7 @@ class Controls extends Component {
 
   render () {
     return (
-      <div className="table">
+      <div className="col-xs-2 controls">
         <button onClick={this.onResetClick.bind(this)}>Reset Game</button>
         <button onClick={this.onCheckClick.bind(this)}>Check Set</button>
         <button onClick={this.onDrawClick.bind(this)}>Draw 3</button>

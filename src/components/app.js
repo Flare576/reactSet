@@ -7,7 +7,7 @@ export default class App extends Component {
     return (
       <div>
         <Table />
-        <Controls />
+        <Controls className="col-xs-2"/>
       </div>
     );
   }

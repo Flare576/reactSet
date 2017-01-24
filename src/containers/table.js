@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {CardsOnTableSelector} from '../selectors/index'
 import {clickCard} from '../actions/index'
+import Card from '../components/card'
 
 class Table extends Component {
 
@@ -15,10 +16,7 @@ class Table extends Component {
         onClick={() => this.props.clickCard(card)}
         className={`card ${card.selected ? 'selected' : ''}`}
         key={card.id}>
-        <span>{card.count}</span>
-        <span>{card.color}</span>
-        <span>{card.shade}</span>
-        <span>{card.shape}</span>
+        <Card card={card} />
       </div>
     )
   }
@@ -26,7 +24,7 @@ class Table extends Component {
   render () {
     console.log(this.props.cards)
     return (
-      <div className="cardTable">
+      <div className="col-xs-10">
         {this.props.cards.map(card => this.renderCard(card))}
         <div className="breaker" />
       </div>

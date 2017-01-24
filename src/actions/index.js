@@ -10,27 +10,27 @@ export const LOCATIONS = {
 }
 
 const COLORS = {
-  RED: 'Red',
-  GREEN: 'Green',
-  PURPLE: 'Purple'
+  RED: 'r',
+  GREEN: 'g',
+  PURPLE: 'p'
 }
 
 const SHADES = {
-  NONE: 'None',
-  LINE: 'Lined',
-  SOLID: 'Solid'
+  NONE: 'O',
+  LINE: 'H',
+  SOLID: 'S'
 }
 
 const SHAPES = {
-  DIAMOND: 'Diamond',
-  OVAL: 'Oval',
-  SQUIGGLE: 'Squiggle'
+  DIAMOND: 'D',
+  OVAL: 'P',
+  SQUIGGLE: 'S'
 }
 
 
 export function resetDeck () {
   let deck = makeDeck()
-  //shuffle(0, deck.length, deck)
+  shuffle(0, deck.length, deck)
   deck = drawCards(9, deck)
 
   return {
@@ -94,9 +94,9 @@ export function discardSelected (deck) {
 
 function makeDeck () {
   let newDeck = []
-  Object.keys(COLORS).forEach(color => {
-    Object.keys(SHADES).forEach(shade => {
-      Object.keys(SHAPES).forEach(shape => {
+  Object.values(COLORS).forEach(color => {
+    Object.values(SHADES).forEach(shade => {
+      Object.values(SHAPES).forEach(shape => {
         for (let count = 1; count <= 3; count++) {
           newDeck.push({
             color,
@@ -105,7 +105,7 @@ function makeDeck () {
             shape,
             location: LOCATIONS.DECK,
             selected: false,
-            id: color+count+shade+shape
+            id: count+shade+color+shape
           })
         }
       })
