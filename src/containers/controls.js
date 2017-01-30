@@ -60,6 +60,15 @@ class Controls extends Component {
         <button onClick={this.onDrawClick.bind(this)}>Draw</button>
         <button onClick={this.onResetClick.bind(this)}>Reset</button>
         <div>Left: {this.props.deck.length}</div>
+        <h2>Rules:</h2>
+        <div>Each card has 3 characteristics:</div>
+        <ul>
+          <li>Color</li>
+          <li>Count</li>
+          <li>Shade</li>
+          <li>Shape</li>
+        </ul>
+        <div>Sets consist of 3 cards which, for each characteristic, are all the same or all different.</div>
       </div>
     )
   }
