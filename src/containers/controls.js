@@ -59,9 +59,11 @@ class Controls extends Component {
         <button onClick={this.onHintClick.bind(this)}>Hint</button>
         <button onClick={this.onDrawClick.bind(this)}>Draw</button>
         <button onClick={this.onResetClick.bind(this)}>Reset</button>
+        <hr />
         <div>Left: {this.props.deck.length}</div>
+        <hr />
         <h2>Rules:</h2>
-        <div>Each card has 3 characteristics:</div>
+        <div>Each card has 4 characteristics:</div>
         <ul>
           <li>Color</li>
           <li>Count</li>
